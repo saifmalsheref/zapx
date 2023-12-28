@@ -3,60 +3,84 @@ part of 'package:zapx/Zap/nav_main.dart';
 
 /// Extension providing utility properties for ZapInterface.
 extension ZapX on ZapInterface {
-  // A key for accessing the navigator state.
+  /// A key for accessing the navigator state.
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-  // Returns the current BuildContext using the navigator key.
+  /// Returns the current BuildContext using the navigator key.
   BuildContext get context => navigatorKey.currentState!.overlay!.context;
 
-  // Indicates whether the app is currently in dark mode.
+  /// Indicates whether the app is currently in dark mode.
   bool get isDarkMode => Theme.of(context).brightness == Brightness.dark;
 
-  // Returns the height of the device screen.
+  /// Returns the height of the device screen.
   double get height => MediaQuery.of(context).size.height;
 
-  // Returns the width of the device screen.
+  /// Returns the width of the device screen.
   double get width => MediaQuery.of(context).size.width;
 
-  // Returns the height of the device's status bar.
+  /// Returns the height of the device's status bar.
   double get statusBarHeight => MediaQuery.of(context).padding.top;
 
-  // Returns the height of the device's bottom navigation bar.
+  /// Returns the height of the device's bottom navigation bar.
   double get bottomBarHeight => MediaQuery.of(context).padding.bottom;
 
-  // Returns the height of the device's top app bar.
+  /// Returns the height of the device's top app bar.
   double get topBarHeight =>
       MediaQuery.of(context).padding.top + kToolbarHeight;
 
-  // Returns the height of the device's safe area.
+  /// Returns the height of the device's safe area.
   double get safeAreaHeight => height - statusBarHeight - bottomBarHeight;
 
-  // Returns the width of the device's safe area.
+  /// Returns the width of the device's safe area.
   double get safeAreaWidth => width - statusBarHeight - bottomBarHeight;
 
-  // Returns the current locale of the app.
+  /// Returns the current locale of the app.
   Locale? get locale => Localizations.localeOf(context);
 
-  // Returns the system locale of the device.
+  /// Returns the system locale of the device.
   Locale get systemLocale => WidgetsBinding.instance.window.locale;
-
-// Returns the device current Orientation state
 
   Orientation get deviceOrientation => MediaQuery.of(context).orientation;
 
-// Returns the current platform of the device (iOS, Android, etc.).
+  /// Returns the current platform of the device (iOS, Android, etc.).
   TargetPlatform get platform => Theme.of(context).platform;
-// Returns the device pixel density.
+
+  /// Returns the device pixel density.
   double get pixelDensity => MediaQuery.of(context).devicePixelRatio;
-// Returns the text scale factor of the device.
+
+  /// Returns the text scale factor of the device.
   double get textScaleFactor => MediaQuery.of(context).textScaleFactor;
-// Returns the system insets of the device.
+
+  /// Returns the system insets of the device.
   EdgeInsets get systemInsets => MediaQuery.of(context).viewInsets;
-// Returns the current ThemeData of the app.
+
+  /// Returns the current ThemeData of the app.
   ThemeData get currentTheme => Theme.of(context);
-// Returns the version of the operating system on the device.
+
+  /// Returns the version of the operating system on the device.
   String get platformVersion => Platform.operatingSystemVersion;
-// Returns whether the device has accessibility features enabled.
+
+  /// Returns whether the device has accessibility features enabled.
   bool get isAccessibilityEnabled =>
       MediaQuery.of(context).accessibleNavigation;
+
+  /// Provides access to device information asynchronously through [DeviceInfo].
+  ///
+  /// Enables the user to asynchronously retrieve device information through
+  /// [DeviceInfo]. This primary getter utilizes the `DeviceInfo` interface and
+  /// initiates the information retrieval process when the [deviceInfo] property
+  /// is called. This is executed asynchronously using the [initDeviceInfo]
+  /// function within the property to obtain device information via the platform
+  /// channel.
+  Future<DeviceInfo> get deviceInfo => DeviceInfo.initDeviceInfo();
+
+  /// Provides access to network information asynchronously through [NetworkInfo].
+  ///
+  /// Enables the user to asynchronously retrieve network information through
+  /// [NetworkInfo]. This primary getter utilizes the `NetworkInfo` interface and
+  /// initiates the information retrieval process when the [networkInfo] property
+  /// is called. This is executed asynchronously using the [initNetworkInfo]
+  /// function within the property to obtain network information via the platform
+  /// channel.
+  Future<NetworkInfo> get networkInfo => NetworkInfo.initNetworkInfo();
 }

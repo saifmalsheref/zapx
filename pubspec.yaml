@@ -3,9 +3,9 @@ description: >
   A Flutter package that provides a set of extensions and utilities
   to enhance the functionality of Flutter applications. Features include
   navigation, validation, localization, and local storage using SQLite.
-version: 0.0.1
-homepage: https://github.com/seifoo2507/zapx
-repository: https://github.com/seifoo2507/zapx
+version: 0.0.2
+homepage: https://github.com/saifmalsheref/zapx
+repository: https://github.com/saifmalsheref/zapx
 environment:
   sdk: '>=3.0.0-210.2.beta <4.0.0'
   flutter: ">=1.17.0"

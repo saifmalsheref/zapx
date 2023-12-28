@@ -1,9 +1,12 @@
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 part 'package:zapx/Zap/extensions/zap_transition.dart';
 part 'package:zapx/Zap/extensions/zap_validator.dart';
 part 'package:zapx/Zap/extensions/global_navigation.dart';
 part 'package:zapx/Zap/extensions/Zapx.dart';
+part 'package:zapx/Zap/extensions/channels/device_info.dart';
+part 'package:zapx/Zap/extensions/channels/network_info.dart';
 
 abstract class ZapInterface {}
 
