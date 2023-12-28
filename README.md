@@ -6,6 +6,7 @@ The Zap package is a collection of extensions and utilities for Flutter applicat
 
 1. [XMaterialApp](#xmaterialapp)
 1. [DeviceInfo](#deviceinfo)
+1. [NetworkInfo](#networkinfo)
 1. [ZapX Extension](#zapx-extension)
 2. [ZapValidator Extension](#zapvalidator-extension)
 3. [TranslationExtension Extension](#translationextension-extension)
