@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:zapx/Zap/nav_main.dart';
+part of 'package:zapx/Zap/zapx.dart';
 
 class XMaterialApp extends StatelessWidget {
   final GlobalKey<NavigatorState>? navigatorKey;
@@ -51,7 +50,8 @@ class XMaterialApp extends StatelessWidget {
   final RouterDelegate<Object>? routerDelegate;
   final BackButtonDispatcher? backButtonDispatcher;
   final bool useInheritedMediaQuery;
-  static XMaterialApp of(BuildContext context) {
+  static XMaterialApp of(BuildContext? context) {
+    context ??= Zap.context;
     final ancestor = context.findAncestorWidgetOfExactType<XMaterialApp>();
     assert(ancestor != null, 'No XMaterialApp found in the widget tree');
     return ancestor!;
@@ -166,10 +166,10 @@ class XMaterialApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (navigatorKey != null) {
-      ZapX.navigatorKey = navigatorKey!;
+      Tools.navigatorKey = navigatorKey!;
     }
     return MaterialApp(
-      navigatorKey: navigatorKey ?? ZapX.navigatorKey,
+      navigatorKey: navigatorKey ?? Tools.navigatorKey,
       scaffoldMessengerKey: scaffoldMessengerKey,
       home: home,
       routes: routes ?? {},

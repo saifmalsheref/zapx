@@ -1,6 +1,6 @@
-// ignore_for_file: constant_identifier_names
+// ignore_for_file: constant_identifier_names, unused_element
 
-part of 'package:zapx/Zap/nav_main.dart';
+part of '../device_info.dart';
 
 /// An enumeration representing different types of network connections.
 enum ConnectionType {
@@ -15,26 +15,27 @@ enum ConnectionType {
 }
 
 /// A class representing device information.
-class DeviceInfo {
+class _Android {
   /// Retrieves all device information asynchronously.
 
   /// Initializes and retrieves device information asynchronously.
   ///
-  /// This function uses a platform channel to invoke the 'getAllDeviceInfo'
+  /// This function uses a platform channel to invoke the 'getAllAndroid'
   /// method and retrieves a Map containing device information from the native
-  /// side. It then constructs a [DeviceInfo] object by parsing the received data
+  /// side. It then constructs a [Android] object by parsing the received data
   /// and returns it.
   ///
-  /// Returns a [DeviceInfo] object containing details about the device.
-  static Future<DeviceInfo> initDeviceInfo() async {
+  /// Returns a [Android] object containing details about the device.
+   Future<_Android> initAndroid() async {
     // Establishes communication with the native side using a platform channel.
     const platform = MethodChannel('ZapChannel');
 
-    // Invokes the 'getAllDeviceInfo' method to retrieve device information.
-    Map result = await platform.invokeMethod('getAllDeviceInfo');
-
-    // Constructs a [DeviceInfo] object by parsing the received data.
-    return DeviceInfo.fromJson(result);
+    // Invokes the 'getAllAndroid' method to retrieve device information.
+    Map result = await platform.invokeMethod('getAllAndroid');
+    Map resultnetwork = await platform.invokeMethod('networkInfo');
+    result.addAll(resultnetwork);
+    // Constructs a [Android] object by parsing the received data.
+    return _Android.fromJson(result);
   }
 
   /// The model of the device.
@@ -84,24 +85,59 @@ class DeviceInfo {
   /// information.
   bool? isConnected;
 
-  DeviceInfo({
-    this.model,
-    this.brand,
-    this.manufacturer,
-    this.product,
-    this.hardware,
-    this.serial,
-    this.androidVersion,
-    this.versionCodeName,
-    this.versionIncremental,
-    this.versionSdk,
-    this.deviceTemperature,
-    this.connectionType,
-    this.isConnected,
-  });
+  /// The SSID (Service Set Identifier) of the connected Wi-Fi network.
+  String? wifiSSID;
 
-  /// Constructs a [DeviceInfo] object from a JSON map.
-  DeviceInfo.fromJson(Map<dynamic, dynamic> json) {
+  /// The BSSID (Basic Service Set Identifier) of the connected Wi-Fi network.
+  String? wifiBSSID;
+
+  /// The IP address of the device on the network.
+  String? ipAddress;
+
+  /// The MAC (Media Access Control) address of the Wi-Fi interface.
+  String? macAddress;
+
+  /// The link speed of the Wi-Fi connection in Mbps.
+  int? linkSpeed;
+
+  /// The ID of the connected Wi-Fi network.
+  int? networkId;
+
+  /// Indicates whether the SSID of the Wi-Fi network is hidden.
+  bool? hiddenSSID;
+
+  /// Indicates whether Wi-Fi is enabled on the device.
+  bool? isWifiEnabled;
+
+  /// Indicates whether the 5GHz band is supported on the device.
+  bool? is5GHzBandSupported;
+
+  _Android(
+      {this.model,
+      this.brand,
+      this.manufacturer,
+      this.product,
+      this.hardware,
+      this.serial,
+      this.androidVersion,
+      this.versionCodeName,
+      this.versionIncremental,
+      this.versionSdk,
+      this.deviceTemperature,
+      this.connectionType,
+      this.isConnected,
+      this.hiddenSSID,
+      this.ipAddress,
+      this.is5GHzBandSupported,
+      this.isWifiEnabled,
+      this.linkSpeed,
+      this.macAddress,
+      this.networkId,
+      this.wifiBSSID,
+      this.wifiSSID});
+
+  /// Constructs a [Android] object from a JSON map.
+  _Android.fromJson(Map<dynamic, dynamic> json) {
     model = json['model'];
     brand = json['brand'];
     deviceTemperature = json['deviceTemperature'];
@@ -115,6 +151,15 @@ class DeviceInfo {
     versionSdk = json['versionSdkInt'].toString();
     isConnected = json['isConnected'];
     connectionType = _parseConnectionType(json['connectionType']);
+    wifiSSID = json['wifiSSID'];
+    wifiBSSID = json['wifiBSSID'];
+    ipAddress = json['ipAddress'].toString();
+    macAddress = json['macAddress'].toString();
+    linkSpeed = json['linkSpeed'];
+    networkId = json['networkId'];
+    hiddenSSID = json['hiddenSSID'];
+    isWifiEnabled = json['isWifiEnabled'];
+    is5GHzBandSupported = json['is5GHzBandSupported'];
   }
 
   /// Parses the connection type from a string representation.

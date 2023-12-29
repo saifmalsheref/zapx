@@ -1,5 +1,4 @@
-import 'package:zapx/Zap/nav_main.dart';
-import 'package:zapx/Zap/widgets/zap_material_app.dart';
+import 'package:zapx/Zap/zapx.dart';
 
 // ignore_for_file: file_names
 

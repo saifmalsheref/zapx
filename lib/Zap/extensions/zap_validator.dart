@@ -1,4 +1,4 @@
-part of 'package:zapx/Zap/nav_main.dart';
+part of 'package:zapx/Zap/zapx.dart';
 
 /// Extension providing common validation methods for ZapInterface.
 extension ZapValidator on ZapInterface {

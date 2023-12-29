@@ -1,6 +1,6 @@
 // ignore_for_file: file_names
 
-part of 'package:zapx/Zap/nav_main.dart';
+part of 'package:zapx/Zap/zapx.dart';
 
 // Consider adding comments to explain the purpose of the enum.
 enum Transition {

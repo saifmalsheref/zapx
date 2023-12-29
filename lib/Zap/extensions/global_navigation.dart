@@ -1,4 +1,4 @@
-part of 'package:zapx/Zap/nav_main.dart';
+part of 'package:zapx/Zap/zapx.dart';
 
 /// Extension on `ZapInterface` providing convenient navigation methods using the Flutter Navigator.
 ///

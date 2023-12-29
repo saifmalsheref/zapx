@@ -1,8 +1,7 @@
-// ignore_for_file: file_names, deprecated_member_use
-part of 'package:zapx/Zap/nav_main.dart';
+part of 'package:zapx/Zap/zapx.dart';
 
 /// Extension providing utility properties for ZapInterface.
-extension ZapX on ZapInterface {
+extension Tools on ZapInterface {
   /// A key for accessing the navigator state.
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -63,24 +62,4 @@ extension ZapX on ZapInterface {
   /// Returns whether the device has accessibility features enabled.
   bool get isAccessibilityEnabled =>
       MediaQuery.of(context).accessibleNavigation;
-
-  /// Provides access to device information asynchronously through [DeviceInfo].
-  ///
-  /// Enables the user to asynchronously retrieve device information through
-  /// [DeviceInfo]. This primary getter utilizes the `DeviceInfo` interface and
-  /// initiates the information retrieval process when the [deviceInfo] property
-  /// is called. This is executed asynchronously using the [initDeviceInfo]
-  /// function within the property to obtain device information via the platform
-  /// channel.
-  Future<DeviceInfo> get deviceInfo => DeviceInfo.initDeviceInfo();
-
-  /// Provides access to network information asynchronously through [NetworkInfo].
-  ///
-  /// Enables the user to asynchronously retrieve network information through
-  /// [NetworkInfo]. This primary getter utilizes the `NetworkInfo` interface and
-  /// initiates the information retrieval process when the [networkInfo] property
-  /// is called. This is executed asynchronously using the [initNetworkInfo]
-  /// function within the property to obtain network information via the platform
-  /// channel.
-  Future<NetworkInfo> get networkInfo => NetworkInfo.initNetworkInfo();
 }

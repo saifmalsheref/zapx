@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:zapx/Zap/extensions/device_data/device_info.dart';
+import 'package:zapx/Zap/extensions/device_data/platforms/web.dart';
 import 'package:zapx/Zap/extensions/zap_store.dart';
 import 'package:zapx/Zap/extensions/zap_translate.dart';
-import 'package:zapx/Zap/nav_main.dart';
-import 'package:zapx/Zap/widgets/zap_material_app.dart';
-import 'package:zapx/zapx.dart';
+import 'package:zapx/Zap/zapx.dart';
 
 void main() {
   runApp(MyApp());
@@ -81,57 +81,154 @@ class MyHomePage extends StatelessWidget {
     bool urlValid = Zap.isValidUrl(text, validSchemes: ["http", "https"]);
   }
 
-  /// Retrieves mobile device information asynchronously.
+  /// Retrieves mobile device information and Retrieves network information asynchronously.
   ///
   /// This method fetches various details about the Android device
   /// Note: To get accurate network information, ensure that the following
   /// permissions are added to the AndroidManifest.xml file:
-  /// - 'android.permission.ACCESS_NETWORK_STATE'
+  /// - 'android.permission.ACCESS_NETWORK_STATE' - 'android.permission.ACCESS_WIFI_STATE'
   ///
   /// Usage Example:
 
-  Future getMobileInfo() async {
-    var deviceInfo = await Zap.deviceInfo;
+  Future getAndroidInfo() async {
+    var androidData = await Zap.deviceInfo.android;
 
     // Print all available device information
-    print('Model: ${deviceInfo.model}');
-    print('Brand: ${deviceInfo.brand}');
-    print('Manufacturer: ${deviceInfo.manufacturer}');
-    print('Product: ${deviceInfo.product}');
-    print('Hardware: ${deviceInfo.hardware}');
-    print('Serial: ${deviceInfo.serial}');
-    print('Android Version: ${deviceInfo.androidVersion}');
-    print('Version Code Name: ${deviceInfo.versionCodeName}');
-    print('Version Incremental: ${deviceInfo.versionIncremental}');
-    print('SDK Version: ${deviceInfo.versionSdk}');
-    print('Device Temperature: ${deviceInfo.deviceTemperature}');
-    print('Connection Type: ${deviceInfo.connectionType}');
-    print('Is Connected: ${deviceInfo.isConnected}');
-  }
-
-  /// Retrieves network information asynchronously.
-  ///
-  /// This method fetches details about the Connection data
-  /// Note: Ensure that the 'android.permission.ACCESS_WIFI_STATE' permission
-  /// is added to the AndroidManifest.xml file for accurate Wi-Fi information.
-  ///
-  /// Usage Example:
-
-  Future getNetworkInfo() async {
-    var networkInfo = await Zap.networkInfo;
-
+    print('Model: ${androidData.model}');
+    print('Brand: ${androidData.brand}');
+    print('Manufacturer: ${androidData.manufacturer}');
+    print('Product: ${androidData.product}');
+    print('Hardware: ${androidData.hardware}');
+    print('Serial: ${androidData.serial}');
+    print('Android Version: ${androidData.androidVersion}');
+    print('Version Code Name: ${androidData.versionCodeName}');
+    print('Version Incremental: ${androidData.versionIncremental}');
+    print('SDK Version: ${androidData.versionSdk}');
+    print('Device Temperature: ${androidData.deviceTemperature}');
     // Print all available network information
-    print('Wi-Fi SSID: ${networkInfo.wifiSSID}');
-    print('Wi-Fi BSSID: ${networkInfo.wifiBSSID}');
-    print('IP Address: ${networkInfo.ipAddress}');
-    print('MAC Address: ${networkInfo.macAddress}');
-    print('Link Speed: ${networkInfo.linkSpeed} Mbps');
-    print('Network ID: ${networkInfo.networkId}');
-    print('Hidden SSID: ${networkInfo.hiddenSSID}');
-    print('Wi-Fi Enabled: ${networkInfo.isWifiEnabled}');
-    print('5GHz Band Supported: ${networkInfo.is5GHzBandSupported}');
-    print('Connection Type: ${networkInfo.connectionType}');
+    print('Wi-Fi SSID: ${androidData.wifiSSID}');
+    print('Wi-Fi BSSID: ${androidData.wifiBSSID}');
+    print('IP Address: ${androidData.ipAddress}');
+    print('MAC Address: ${androidData.macAddress}');
+    print('Link Speed: ${androidData.linkSpeed} Mbps');
+    print('Network ID: ${androidData.networkId}');
+    print('Hidden SSID: ${androidData.hiddenSSID}');
+    print('Wi-Fi Enabled: ${androidData.isWifiEnabled}');
+    print('5GHz Band Supported: ${androidData.is5GHzBandSupported}');
+    print('Connection Type: ${androidData.connectionType}');
+    print('Is Connected: ${androidData.isConnected}');
   }
+
+  /// A function to get Linux information
+  ///
+  /// This function returns an instance of the [Linux] class containing
+  /// information about the Linux system.
+  Future getLinuxInfo() async {
+    var linuxData = await Zap.deviceInfo.linux;
+
+    // Print Linux information
+    print('Linux Information:');
+    print('OS: ${linuxData.osInfo?.os}');
+    print('Distribution: ${linuxData.osInfo?.distribution}');
+    print('Version: ${linuxData.osInfo?.version}');
+    print('Kernel: ${linuxData.osInfo?.kernel}');
+    print('Architecture: ${linuxData.osInfo?.architecture}');
+    print('Additional Info: ${linuxData.osInfo?.additionalInfo}');
+
+    print('\nCPU Information:');
+    print('Processor: ${linuxData.cpuInfo?.processor}');
+    print('Vendor ID: ${linuxData.cpuInfo?.vendorId}');
+    print('CPU Family: ${linuxData.cpuInfo?.cpuFamily}');
+    print('Model: ${linuxData.cpuInfo?.model}');
+    print('Model Name: ${linuxData.cpuInfo?.modelName}');
+    print('Stepping: ${linuxData.cpuInfo?.stepping}');
+    print('Microcode: ${linuxData.cpuInfo?.microcode}');
+    print('CPU MHz: ${linuxData.cpuInfo?.cpuMHz}');
+    print('Cache Size: ${linuxData.cpuInfo?.cacheSize}');
+    print('Physical ID: ${linuxData.cpuInfo?.physicalId}');
+    print('Siblings: ${linuxData.cpuInfo?.siblings}');
+    print('Core ID: ${linuxData.cpuInfo?.coreId}');
+    print('CPU Cores: ${linuxData.cpuInfo?.cpuCores}');
+    print('APIC ID: ${linuxData.cpuInfo?.apicid}');
+    print('Initial APIC ID: ${linuxData.cpuInfo?.initialApicid}');
+    print('FPU: ${linuxData.cpuInfo?.fpu}');
+    print('FPU Exception: ${linuxData.cpuInfo?.fpuException}');
+    print('CPUID Level: ${linuxData.cpuInfo?.cpuidLevel}');
+    print('WP: ${linuxData.cpuInfo?.wp}');
+    print('Flags: ${linuxData.cpuInfo?.flags}');
+    print('Bugs: ${linuxData.cpuInfo?.bugs}');
+    print('Bogomips: ${linuxData.cpuInfo?.bogomips}');
+    print('TLB Size: ${linuxData.cpuInfo?.tlbSize}');
+    print('CLFLUSH Size: ${linuxData.cpuInfo?.clflushSize}');
+    print('Cache Alignment: ${linuxData.cpuInfo?.cacheAlignment}');
+    print('Address Sizes: ${linuxData.cpuInfo?.addressSizes}');
+    print('Power Management: ${linuxData.cpuInfo?.powerManagement}');
+
+    print('\nMemory Information:');
+    print('Total: ${linuxData.memoryInfo?.total}');
+    print('Used: ${linuxData.memoryInfo?.used}');
+    print('Free: ${linuxData.memoryInfo?.free}');
+    print('Shared: ${linuxData.memoryInfo?.shared}');
+    print('Buffer/Cache: ${linuxData.memoryInfo?.buffCache}');
+    print('Available: ${linuxData.memoryInfo?.available}');
+
+    print('\nSwap Information:');
+    print('Total: ${linuxData.swapInfo?.total}');
+    print('Used: ${linuxData.swapInfo?.used}');
+    print('Free: ${linuxData.swapInfo?.free}');
+  }
+
+/// A function to get information specific to a web environment (browser).
+///
+/// This function creates an instance of the [ZapWebInfo] class and retrieves
+/// various web-related information such as location, platform, device memory,
+/// user agent, etc.
+Future getWebInfo() async {
+  // Create an instance of ZapWebInfo
+  var webData = ZapWebInfo();
+
+  // Retrieve web information
+  var location = await webData.location;
+  var platform = webData.platform;
+  var cookieEnabled = webData.cookieEnabled;
+  var deviceMemory = webData.deviceMemory;
+  var userAgent = webData.userAgent;
+  var appVersion = webData.appVersion;
+  var language = webData.language;
+  var languages = webData.languages;
+  var innerWidth = webData.innerWidth;
+  var innerHeight = webData.innerHeight;
+
+  // Display alert
+  webData.showAlert('Hello, this is an alert from ZapWebInfo!');
+
+  // Push a notification
+  webData.pushNotification('Notification Title', 'Notification Body');
+  // Print retrieved information
+  print('Location: $location');
+  print('Platform: $platform');
+  print('Cookie Enabled: $cookieEnabled');
+  print('Device Memory: $deviceMemory GB');
+  print('User Agent: $userAgent');
+  print('App Version: $appVersion');
+  print('Language: $language');
+  print('Languages: $languages');
+  print('Inner Width: $innerWidth');
+  print('Inner Height: $innerHeight');
+
+  // Retrieve location information
+  Location getLocation = await webData.location;
+
+  // Print location information
+  print('Location Information:');
+  print('Accuracy: ${location.accuracy}');
+  print('Altitude: ${location.altitude}');
+  print('Altitude Accuracy: ${location.altitudeAccuracy}');
+  print('Heading: ${location.heading}');
+  print('Latitude: ${location.latitude}');
+  print('Longitude: ${location.longitude}');
+  print('Speed: ${location.speed}');
+}
 
   /// Saves data using the [ZapStore] class methods.
   Future<void> saveData() async {
