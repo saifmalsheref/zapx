@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
 import 'package:zapx/Zap/extensions/device_data/device_info.dart';
 import 'package:zapx/Zap/extensions/device_data/platforms/web.dart';
