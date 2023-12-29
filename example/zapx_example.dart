@@ -178,71 +178,73 @@ class MyHomePage extends StatelessWidget {
     print('Free: ${linuxData.swapInfo?.free}');
   }
 
-/// A function to get information specific to a web environment (browser).
-///
-/// This function creates an instance of the [ZapWebInfo] class and retrieves
-/// various web-related information such as location, platform, device memory,
-/// user agent, etc.
-Future getWebInfo() async {
-  // Create an instance of ZapWebInfo
-  var webData = ZapWebInfo();
+  /// A function to get information specific to a web environment (browser).
+  ///
+  /// This function creates an instance of the [ZapWebInfo] class and retrieves
+  /// various web-related information such as location, platform, device memory,
+  /// user agent, etc.
+  Future getWebInfo() async {
+    // Create an instance of ZapWebInfo
+    var webData = ZapWebInfo();
 
-  // Retrieve web information
-  var location = await webData.location;
-  var platform = webData.platform;
-  var cookieEnabled = webData.cookieEnabled;
-  var deviceMemory = webData.deviceMemory;
-  var userAgent = webData.userAgent;
-  var appVersion = webData.appVersion;
-  var language = webData.language;
-  var languages = webData.languages;
-  var innerWidth = webData.innerWidth;
-  var innerHeight = webData.innerHeight;
+    // Retrieve web information
+    var location = await webData.location;
+    var platform = webData.platform;
+    var cookieEnabled = webData.cookieEnabled;
+    var deviceMemory = webData.deviceMemory;
+    var userAgent = webData.userAgent;
+    var appVersion = webData.appVersion;
+    var language = webData.language;
+    var languages = webData.languages;
+    var innerWidth = webData.innerWidth;
+    var innerHeight = webData.innerHeight;
 
-  // Display alert
-  webData.showAlert('Hello, this is an alert from ZapWebInfo!');
+    // Display alert
+    webData.showAlert('Hello, this is an alert from ZapWebInfo!');
 
-  // Push a notification
-  webData.pushNotification('Notification Title', 'Notification Body');
-  // Print retrieved information
-  print('Location: $location');
-  print('Platform: $platform');
-  print('Cookie Enabled: $cookieEnabled');
-  print('Device Memory: $deviceMemory GB');
-  print('User Agent: $userAgent');
-  print('App Version: $appVersion');
-  print('Language: $language');
-  print('Languages: $languages');
-  print('Inner Width: $innerWidth');
-  print('Inner Height: $innerHeight');
+    // Push a notification
+    webData.pushNotification('Notification Title', 'Notification Body');
+    // Print retrieved information
+    print('Location: $location');
+    print('Platform: $platform');
+    print('Cookie Enabled: $cookieEnabled');
+    print('Device Memory: $deviceMemory GB');
+    print('User Agent: $userAgent');
+    print('App Version: $appVersion');
+    print('Language: $language');
+    print('Languages: $languages');
+    print('Inner Width: $innerWidth');
+    print('Inner Height: $innerHeight');
 
-  // Retrieve location information
-  Location getLocation = await webData.location;
+    // Retrieve location information
+    Location getLocation = await webData.location;
 
-  // Print location information
-  print('Location Information:');
-  print('Accuracy: ${location.accuracy}');
-  print('Altitude: ${location.altitude}');
-  print('Altitude Accuracy: ${location.altitudeAccuracy}');
-  print('Heading: ${location.heading}');
-  print('Latitude: ${location.latitude}');
-  print('Longitude: ${location.longitude}');
-  print('Speed: ${location.speed}');
-}
+    // Print location information
+    print('Location Information:');
+    print('Accuracy: ${location.accuracy}');
+    print('Altitude: ${location.altitude}');
+    print('Altitude Accuracy: ${location.altitudeAccuracy}');
+    print('Heading: ${location.heading}');
+    print('Latitude: ${location.latitude}');
+    print('Longitude: ${location.longitude}');
+    print('Speed: ${location.speed}');
+  }
 
   /// Saves data using the [ZapStore] class methods.
   Future<void> saveData() async {
-    // Update the value associated with the key.
-    await ZapStore.update("key", "newValue");
+    // Insert a new key-value pair.
+    await zapStore.add("key", "new value");
 
     // Retrieve the value associated with the key.
-    dynamic? retrievedValue = await ZapStore.get("key");
+    String? StringRetrievedValue = zapStore.getString("key");
+    bool? BoolRetrievedValue = zapStore.getBool("key");
+    int? IntRetrievedValue = zapStore.getInt("key");
+    Map? MapRetrievedValue = zapStore.getMap("key");
+    List? getStringListRetrievedValue = zapStore.getStringList("key");
 
     // Delete the key-value pair.
-    await ZapStore.delete("key");
+    bool deleted = await zapStore.delete("key");
 
-    // Insert a new key-value pair.
-    await ZapStore.insert("key", "value");
   }
 
   /// Example usage of the ZapNavigation functions.

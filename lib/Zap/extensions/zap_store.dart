@@ -1,90 +1,110 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers
+// ignore_for_file: no_leading_underscores_for_local_identifiers, library_private_types_in_public_api, avoid_print, unused_element
 
 import 'dart:convert';
+import 'dart:io';
 
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:path_provider/path_provider.dart';
 
-/// `ZapStore` is a simple local storage solution using SQLite in Flutter.
-/// It provides methods for basic CRUD operations (Create, Read, Update, Delete)
-/// on a SQLite database.
+_ZapStore zapStore = _ZapStore();
 
-class ZapStore {
-  /// Private static variable to hold the reference to the database.
-  static late Database _database;
+/// The ZapStore class provides a simple interface to interact with a JSON data store.
+///
+/// It exposes methods for retrieving data (getString, getInt, getBool, getStringList, getMap),
+/// as well as adding (add) and deleting (delete) key-value pairs in an asynchronous manner.
+class _ZapStore {
+  /// Retrieves a string value associated with the specified key.
+  String? getString(String key) => JsonDataStore()._getValue(key);
 
-  /// Initializes the SQLite database and creates the necessary table if it doesn't exist.
-  static Future<void> _initializeDatabase() async {
-    final Future<Database> database = openDatabase(
-      join(await getDatabasesPath(), 'zap_store.db'),
-      onCreate: (db, version) {
-        // Creates the 'database' table with columns 'id', 'key', and 'value'.
-        return db.execute(
-          'CREATE TABLE database(id INTEGER PRIMARY KEY AUTOINCREMENT, key TEXT, value TEXT)',
-        );
-      },
-      version: 1,
-    );
-    // Assigns the opened database to the private static variable.
-    _database = await database;
+  /// Retrieves an integer value associated with the specified key.
+  int? getInt(String key) => JsonDataStore()._getValue(key);
+
+  /// Retrieves a boolean value associated with the specified key.
+  bool? getBool(String key) => JsonDataStore()._getValue(key);
+
+  /// Retrieves a list of strings associated with the specified key.
+  List? getStringList(String key) => JsonDataStore()._getValue(key);
+
+  /// Retrieves a map associated with the specified key.
+  Map? getMap(String key) => JsonDataStore()._getValue(key);
+
+  /// Deletes the key-value pair associated with the specified key.
+  ///
+  /// Returns a Future<bool> indicating whether the operation was successful.
+  Future<bool> delete(String key) => JsonDataStore()._delete(key);
+
+  /// Adds or updates a key-value pair with the specified key and value.
+  ///
+  /// Returns a Future<bool> indicating whether the operation was successful.
+  Future<bool> add(String key, String value) =>
+      JsonDataStore()._add(key, value);
+}
+
+/// The JsonDataStore class manages the underlying data storage operations.
+class JsonDataStore {
+  Map<String, dynamic> _data = {};
+
+  /// Initializes the JsonDataStore and loads data from the JSON file.
+  JsonDataStore() {
+    _loadData();
   }
 
-  /// Inserts a key-value pair into the database.
-  static Future<bool> insert(String key, dynamic value) async {
-    await _initializeDatabase();
-    // Encodes the dynamic value to a JSON-encoded string.
-    var valueEnCode = json.encode(value);
-    // Inserts or replaces the key-value pair in the 'database' table.
-    await _database.insert(
-      'database',
-      {'key': key, 'value': valueEnCode},
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-    // Returns true to indicate the successful insertion.
-    return true;
+  /// Retrieves the application directory path where the JSON file is stored.
+  Future<String> _getAppPath() async {
+    final appDocumentsDirectory = await getApplicationCacheDirectory();
+    return appDocumentsDirectory.path;
   }
 
-  /// Retrieves the value associated with a given key from the database.
-  static Future<dynamic> get(String key) async {
-    await _initializeDatabase();
-    // Queries the 'database' table for a specific key.
-    List<Map<String, dynamic>> result = await _database.query(
-      'database',
-      where: 'key = ?',
-      whereArgs: [key],
-    );
-
-    // Checks if the result is not empty.
-    if (result.isNotEmpty) {
-      // Decodes the JSON-encoded value and returns it.
-      var _value = result.first['value'];
-      return jsonDecode(_value);
-    } else {
-      // Returns null if the key is not found in the database.
-      return null;
+  /// Loads data from the JSON file into the internal data structure.
+  void _loadData() async {
+    String _filePath = '${await _getAppPath()}/zap_store.json';
+    try {
+      File file = File(_filePath);
+      if (file.existsSync()) {
+        String contents = file.readAsStringSync();
+        _data = json.decode(contents);
+      }
+    } catch (e, stackTrace) {
+      print('Error loading data: $e');
+      print(stackTrace);
     }
   }
 
-  /// Deletes a key-value pair from the database based on the key.
-  static Future<void> delete(String key) async {
-    await _initializeDatabase();
-    // Deletes the key-value pair from the 'database' table based on the key.
-    await _database.delete(
-      'database',
-      where: 'key = ?',
-      whereArgs: [key],
-    );
+  /// Saves the internal data structure to the JSON file.
+  ///
+  /// Returns a Future<bool> indicating whether the operation was successful.
+  Future<bool> _saveData() async {
+    String _filePath = '${await _getAppPath()}/zap_store.json';
+    try {
+      File file = File(_filePath);
+      await file.writeAsString(json.encode(_data));
+      return true; // Assuming success, you can modify this based on your requirements
+    } catch (e, stackTrace) {
+      print('Error saving data: $e');
+      print(stackTrace);
+      return false; // Failed to save data
+    }
   }
 
-  /// Updates the value associated with a given key in the database.
-  static Future<void> update(String key, dynamic newValue) async {
-    await _initializeDatabase();
-    // Updates the 'value' column in the 'database' table for a specific key.
-    await _database.update(
-      'database',
-      {'value': json.encode(newValue)},
-      where: 'key = ?',
-      whereArgs: [key],
-    );
+  /// Adds a key-value pair to the internal data structure and saves it to the JSON file.
+  ///
+  /// Returns a Future<bool> indicating whether the operation was successful.
+  Future<bool> _add(String key, dynamic value) async {
+    _data[key] = value;
+    await _saveData();
+    return true; // Assuming success, you can modify this based on your requirements
+  }
+
+  /// Deletes a key-value pair from the internal data structure and saves the changes to the JSON file.
+  ///
+  /// Returns a Future<bool> indicating whether the operation was successful.
+  Future<bool> _delete(String key) async {
+    _data.remove(key);
+    await _saveData();
+    return true; // Assuming success, you can modify this based on your requirements
+  }
+
+  /// Retrieves the value associated with a key from the internal data structure.
+  dynamic _getValue(String key) {
+    return _data[key];
   }
 }

@@ -11,8 +11,8 @@ extension TranslationExtension on String {
     var map = XMaterialApp.of(Zap.context).translationsKeys;
 
     // Determine the target language based on the app's current locale or the system locale.
-    String targetLanguage =
-        Zap.locale?.languageCode ?? Zap.systemLocale.languageCode.toLowerCase();
+    String targetLanguage = XMaterialApp.of(Zap.context).locale?.languageCode ??
+        Zap.systemLocale.languageCode.toLowerCase();
 
     // Check if the translations map is available and contains the target language and key.
     if (map != null &&

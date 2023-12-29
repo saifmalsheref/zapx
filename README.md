@@ -1,6 +1,6 @@
-# Zap Flutter Package
+# Zapx Flutter Package
 
-The Zap package is a versatile collection of extensions and utilities for Flutter applications, designed to enhance functionality in various domains, including navigation, validation, localization, and local storage using SQLite. With the Zap package, developers can seamlessly access device-specific information for Android, Linux, and web environments.
+The Zapx package is a versatile collection of extensions and utilities for Flutter applications, designed to enhance functionality in various domains, including navigation, validation, localization, and local storage using Json. With the Zapx package, developers can seamlessly access device-specific information for Android, Linux, and web environments.
 
 ## Table of Contents
 
@@ -11,7 +11,7 @@ The Zap package is a versatile collection of extensions and utilities for Flutte
 1. [ZapX Extension](#zapx-extension)
 2. [Validator Extension](#validator-extension)
 3. [Translation Extension](#translation-extension)
-4. [ZapStore Class](#zapstore-class)
+4. [ZapStore](#zapstore)
 5. [Navigation Extension](#navigation-extension)
 
 ---
@@ -19,7 +19,7 @@ The Zap package is a versatile collection of extensions and utilities for Flutte
 ## XMaterialApp
 ### Overview
 
-The XMaterialApp is an extension of MaterialApp that integrates seamlessly with the Zap package. It enhances the overall functionality of MaterialApp and provides additional features for a smoother development experience.
+The XMaterialApp is an extension of MaterialApp that integrates seamlessly with the Zapx package. It enhances the overall functionality of MaterialApp and provides additional features for a smoother development experience.
 
 ### Example
 ```dart
@@ -70,10 +70,6 @@ The `Android Info` represents device information and provides methods to retriev
 - **isConnected**: Indicates whether the device is currently connected to a network.
 
 
-
-### Methods
-
-- **Zap.deviceInfo**: Initializes and retrieves device information asynchronously.
 
 ### Example
 
@@ -501,6 +497,7 @@ The `Translation` extension provides translation capabilities for strings. It en
 
 ### Example
 ```dart
+Locale myLocale = Locale("ar");
 // in myApp
 class MyApp extends StatelessWidget {
   @override
@@ -508,7 +505,7 @@ class MyApp extends StatelessWidget {
    ///[XMaterialApp] is assumed to be part of MaterialApp based on the provided information
     return XMaterialApp(
       translationsKeys: TranslationController.Translation,
-      locale: Locale("ar"),
+      locale: myLocale,
       home: MyHomePage(),
     );
   }
@@ -537,6 +534,13 @@ class homeScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('hello'.ztr), // مرحبا
       ),
+      body: TextButton(
+        onPressed: (){
+          myLocale = Locale("en"); // change locale to English
+          setState(() {}); // update the UI or using your state Managment update
+        },
+        child: Text("change locale")
+      )
     );}}
 
 
@@ -544,37 +548,50 @@ class homeScreen extends StatelessWidget {
 
 ---
 
-## ZapStore Class
+## ZapStore
 
 ### Overview
 
-The `ZapStore` class is a simple local storage solution using SQLite in Flutter. It facilitates basic CRUD operations (Create, Read, Update, Delete) on a SQLite database.
+The `ZapStore` class is a simple local storage solution using Json in Flutter. It facilitates basic CRUD operations (Create or Update, Read, Delete) on a Json database.
 
 ### Methods
 
-- **insert**: Inserts a key-value pair into the database.
+- **add**: Inserts a key-value pair into the database.
+  - Parameters:
+    - `key`: The key to insert.
+    - `value`: The value associated with the key.
+
 - **get**: Retrieves the value associated with a given key from the database.
+  - Parameters:
+    - `key`: The key to retrieve the value for.
+  - Returns: The value associated with the specified key.
+
 - **delete**: Deletes a key-value pair from the database based on the key.
-- **update**: Updates the value associated with a given key in the database.
+  - Parameters:
+    - `key`: The key to delete.
+  - Returns: A `Future<bool>` indicating whether the deletion was successful.
 
 ### Example
 
 ```dart
+import 'package:zapx/Zap/extensions/zap_store.dart';
+
   /// Saves data using the [ZapStore] class methods.
-Future<void> saveData() async {
-    // Update the value associated with the key.
-    await ZapStore.update(key, newValue);
+  Future<void> saveData() async {
+    // Insert a new key-value pair.
+    await zapStore.add("key", "new value");
 
     // Retrieve the value associated with the key.
-    dynamic? retrievedValue = await ZapStore.get(key);
+    String? StringRetrievedValue = zapStore.getString("key");
+    bool? BoolRetrievedValue = zapStore.getBool("key");
+    int? IntRetrievedValue = zapStore.getInt("key");
+    Map? MapRetrievedValue = zapStore.getMap("key");
+    List? getStringListRetrievedValue = zapStore.getStringList("key");
 
     // Delete the key-value pair.
-    await ZapStore.delete(key);
+    bool deleted = await zapStore.delete("key");
 
-    // Insert a new key-value pair.
-    await ZapStore.insert(key, value);
   }
-
 ```
 ---
 
@@ -646,4 +663,4 @@ The `ZapNavigation` extension provides convenient navigation methods using the F
 ```
 ---
 
-Feel free to explore and leverage the features provided by the Zap package to enhance your Flutter applications. For detailed information on each extension and class, refer to the respective sections above.
+Feel free to explore and leverage the features provided by the Zapx package to enhance your Flutter applications. For detailed information on each extension and class, refer to the respective sections above.

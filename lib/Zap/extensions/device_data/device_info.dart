@@ -7,11 +7,11 @@ import 'package:zapx/Zap/zapx.dart';
 part 'package:zapx/Zap/extensions/device_data/platforms/android.dart';
 part 'package:zapx/Zap/extensions/device_data/platforms/linux.dart';
 
-class _DeviceInfo {
+class DeviceInfo {
   Future<_Android> get android => _Android().initAndroid();
   Future<_Linux> get linux => _Linux().initLinux();
 }
 
 extension DeviceInfoExtension on ZapInterface {
-  _DeviceInfo get deviceInfo => _DeviceInfo();
+  DeviceInfo get deviceInfo => DeviceInfo();
 }
