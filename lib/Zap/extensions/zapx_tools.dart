@@ -37,7 +37,7 @@ extension Tools on ZapInterface {
   Locale? get locale => Localizations.localeOf(context);
 
   /// Returns the system locale of the device.
-  Locale get systemLocale => WidgetsBinding.instance.window.locale;
+  Locale get systemLocale => View.of(context).platformDispatcher.locale;
 
   Orientation get deviceOrientation => MediaQuery.of(context).orientation;
 

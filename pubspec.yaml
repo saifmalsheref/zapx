@@ -1,9 +1,7 @@
 name: zapx
 description: >
-  A Flutter package that provides a set of extensions and utilities
-  to enhance the functionality of Flutter applications. Features include
-  navigation, validation, localization, and local storage using SQLite.
-version: 0.0.4
+  Powerful Flutter extensions for navigation, validation, localization, and JSON storage.
+version: 0.0.4+1
 homepage: https://github.com/saifmalsheref/zapx
 repository: https://github.com/saifmalsheref/zapx
 environment:
