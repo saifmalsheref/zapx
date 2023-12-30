@@ -13,19 +13,23 @@ _ZapStore zapStore = _ZapStore();
 /// as well as adding (add) and deleting (delete) key-value pairs in an asynchronous manner.
 class _ZapStore {
   /// Retrieves a string value associated with the specified key.
-  String? getString(String key) => JsonDataStore()._getValue(key);
+  Future<String> getString(String key) => JsonDataStore()._getString(key);
 
   /// Retrieves an integer value associated with the specified key.
-  int? getInt(String key) => JsonDataStore()._getValue(key);
+  Future<int> getInt(String key) => JsonDataStore()._getInt(key);
 
   /// Retrieves a boolean value associated with the specified key.
-  bool? getBool(String key) => JsonDataStore()._getValue(key);
+  Future<bool> getBool(String key) => JsonDataStore()._getBool(key);
 
   /// Retrieves a list of strings associated with the specified key.
-  List? getStringList(String key) => JsonDataStore()._getValue(key);
+  Future<List<String>> getStringList(String key) =>
+      JsonDataStore()._getStringList(key);
 
   /// Retrieves a map associated with the specified key.
-  Map? getMap(String key) => JsonDataStore()._getValue(key);
+  Future<Map> getMap(String key) => JsonDataStore()._getMap(key);
+
+  /// Retrieves a double associated with the specified key.
+  Future<double> getDouble(String key) => JsonDataStore()._getDouble(key);
 
   /// Deletes the key-value pair associated with the specified key.
   ///
@@ -50,18 +54,24 @@ class JsonDataStore {
 
   /// Retrieves the application directory path where the JSON file is stored.
   Future<String> _getAppPath() async {
-    final appDocumentsDirectory = await getApplicationCacheDirectory();
+   late Directory appDocumentsDirectory;
+    if (Platform.isAndroid) {
+      appDocumentsDirectory = await getApplicationCacheDirectory();
+    } else {
+      await getApplicationCacheDirectory();
+    }
     return appDocumentsDirectory.path;
   }
 
   /// Loads data from the JSON file into the internal data structure.
-  void _loadData() async {
+  Future _loadData() async {
     String _filePath = '${await _getAppPath()}/zap_store.json';
     try {
       File file = File(_filePath);
       if (file.existsSync()) {
         String contents = file.readAsStringSync();
         _data = json.decode(contents);
+        return true;
       }
     } catch (e, stackTrace) {
       print('Error loading data: $e');
@@ -104,7 +114,33 @@ class JsonDataStore {
   }
 
   /// Retrieves the value associated with a key from the internal data structure.
-  dynamic _getValue(String key) {
+  Future<Map> _getMap(String key) async {
+    await _loadData();
+    return _data[key];
+  }
+
+  Future<String> _getString(String key) async {
+    await _loadData();
+    return _data[key];
+  }
+
+  Future<bool> _getBool(String key) async {
+    await _loadData();
+    return _data[key];
+  }
+
+  Future<int> _getInt(String key) async {
+    await _loadData();
+    return _data[key];
+  }
+
+  Future<double> _getDouble(String key) async {
+    await _loadData();
+    return _data[key];
+  }
+
+  Future<List<String>> _getStringList(String key) async {
+    await _loadData();
     return _data[key];
   }
 }
