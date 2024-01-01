@@ -238,12 +238,12 @@ class MyHomePage extends StatelessWidget {
     await zapStore.add("key", "new value");
 
     // Retrieve the value associated with the key.
-    Future<String> StringRetrievedValue = zapStore.getString("key");
-   Future<bool>  BoolRetrievedValue = zapStore.getBool("key");
-   Future<int>  IntRetrievedValue = zapStore.getInt("key");
-    Future<Map> MapRetrievedValue = zapStore.getMap("key");
-    Future<List<String>>? getStringListRetrievedValue = zapStore.getStringList("key");
-Future<double> getDoubleValue = zapStore.getDouble("key");
+    Future<String?>? StringRetrievedValue = zapStore.getString("key");
+   Future<bool?>?  BoolRetrievedValue = zapStore.getBool("key");
+   Future<int?>?  IntRetrievedValue = zapStore.getInt("key");
+    Future<Map?>? MapRetrievedValue = zapStore.getMap("key");
+    Future<List<String>?>? getStringListRetrievedValue = zapStore.getStringList("key");
+Future<double?>? getDoubleValue = zapStore.getDouble("key");
     // Delete the key-value pair.
     bool deleted = await zapStore.delete("key");
 

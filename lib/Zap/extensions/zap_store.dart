@@ -13,23 +13,23 @@ _ZapStore zapStore = _ZapStore();
 /// as well as adding (add) and deleting (delete) key-value pairs in an asynchronous manner.
 class _ZapStore {
   /// Retrieves a string value associated with the specified key.
-  Future<String> getString(String key) => JsonDataStore()._getString(key);
+  Future<String?>? getString(String key) => JsonDataStore()._getString(key);
 
   /// Retrieves an integer value associated with the specified key.
-  Future<int> getInt(String key) => JsonDataStore()._getInt(key);
+  Future<int?>? getInt(String key) => JsonDataStore()._getInt(key);
 
   /// Retrieves a boolean value associated with the specified key.
-  Future<bool> getBool(String key) => JsonDataStore()._getBool(key);
+  Future<bool?>? getBool(String key) => JsonDataStore()._getBool(key);
 
   /// Retrieves a list of strings associated with the specified key.
-  Future<List<String>> getStringList(String key) =>
+  Future<List<String>?>? getStringList(String key) =>
       JsonDataStore()._getStringList(key);
 
   /// Retrieves a map associated with the specified key.
-  Future<Map> getMap(String key) => JsonDataStore()._getMap(key);
+  Future<Map?>? getMap(String key) => JsonDataStore()._getMap(key);
 
   /// Retrieves a double associated with the specified key.
-  Future<double> getDouble(String key) => JsonDataStore()._getDouble(key);
+  Future<double?>? getDouble(String key) => JsonDataStore()._getDouble(key);
 
   /// Deletes the key-value pair associated with the specified key.
   ///
@@ -54,7 +54,7 @@ class JsonDataStore {
 
   /// Retrieves the application directory path where the JSON file is stored.
   Future<String> _getAppPath() async {
-   late Directory appDocumentsDirectory;
+    late Directory appDocumentsDirectory;
     if (Platform.isAndroid) {
       appDocumentsDirectory = await getApplicationCacheDirectory();
     } else {
@@ -64,7 +64,7 @@ class JsonDataStore {
   }
 
   /// Loads data from the JSON file into the internal data structure.
-  Future _loadData() async {
+  Future<bool?>? _loadData() async {
     String _filePath = '${await _getAppPath()}/zap_store.json';
     try {
       File file = File(_filePath);
@@ -77,6 +77,7 @@ class JsonDataStore {
       print('Error loading data: $e');
       print(stackTrace);
     }
+    return null;
   }
 
   /// Saves the internal data structure to the JSON file.
@@ -114,33 +115,39 @@ class JsonDataStore {
   }
 
   /// Retrieves the value associated with a key from the internal data structure.
-  Future<Map> _getMap(String key) async {
-    await _loadData();
-    return _data[key];
+  Future<Map?>? _getMap(String key) async {
+    bool? have = await _loadData();
+    if (have != null) return _data[key];
+    return null;
   }
 
-  Future<String> _getString(String key) async {
-    await _loadData();
-    return _data[key];
+  Future<String?>? _getString(String key) async {
+    bool? have = await _loadData();
+    if (have != null) return _data[key];
+    return null;
   }
 
-  Future<bool> _getBool(String key) async {
-    await _loadData();
-    return _data[key];
+  Future<bool?>? _getBool(String key) async {
+    bool? have = await _loadData();
+    if (have != null) return _data[key];
+    return null;
   }
 
-  Future<int> _getInt(String key) async {
-    await _loadData();
-    return _data[key];
+  Future<int?>? _getInt(String key) async {
+  bool? have =   await _loadData();
+   if (have != null) return _data[key];
+   return null;
   }
 
-  Future<double> _getDouble(String key) async {
-    await _loadData();
-    return _data[key];
+  Future<double?>? _getDouble(String key) async {
+   bool? have =  await _loadData();
+  if (have != null)  return _data[key];
+  return null;
   }
 
-  Future<List<String>> _getStringList(String key) async {
-    await _loadData();
-    return _data[key];
+  Future<List<String>?>? _getStringList(String key) async {
+   bool? have =  await _loadData();
+if (have != null)     return _data[key];
+return null;
   }
 }
