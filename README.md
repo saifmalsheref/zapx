@@ -11,7 +11,7 @@ The Zapx package is a versatile collection of extensions and utilities for Flutt
 1. [ZapX Extension](#zapx-extension)
 2. [Validator Extension](#validator-extension)
 3. [Translation Extension](#translation-extension)
-4. [ZapStore](#zapstore)
+<!-- 4. [ZapStore](#zapstore) -->
 5. [Navigation Extension](#navigation-extension)
 
 ---
@@ -547,7 +547,7 @@ class homeScreen extends StatelessWidget {
 ```
 
 ---
-
+<!-- 
 ## ZapStore
 
 ### Overview
@@ -594,7 +594,7 @@ Future<double?>? getDoubleValue = zapStore.getDouble("key");
   }
 
 ```
----
+--- -->
 
 
 ## Navigation Extension

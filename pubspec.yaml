@@ -1,7 +1,7 @@
 name: zapx
 description: >
   Powerful Flutter extensions for navigation, validation, localization, and JSON storage.
-version: 0.0.6
+version: 0.0.6+1
 homepage: https://github.com/saifmalsheref/zapx
 repository: https://github.com/saifmalsheref/zapx
 environment:
