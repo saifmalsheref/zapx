@@ -7,7 +7,7 @@ The Zapx package is a versatile collection of extensions and utilities for Flutt
 1. [XMaterialApp](#xmaterialapp)
 2. [Debug Banner](#debug-banner)
 3. [ZapX Extension](#zapx-extension)
-4. [Validator](#validator)
+4. [Validaton](#Validaton)
 5. [Translation](#translation)
 6. [Navigation](#navigation)
 
@@ -149,11 +149,11 @@ void main(){
 
 ---
 
-## Validator 
+## Validaton 
 
 ### Overview
 
-The `ZapValidator` extension offers common validation methods for `ZapInterface`. It includes validation for email addresses, passwords, phone numbers, and URLs.
+The `ZapValidaton` extension offers common validation methods for `ZapInterface`. It includes validation for email addresses, passwords, phone numbers, and URLs.
 
 ### Validation Methods
 
