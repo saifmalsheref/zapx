@@ -171,49 +171,51 @@ class XMaterialApp extends StatelessWidget {
     if (navigatorKey != null) {
       Tools.navigatorKey = navigatorKey!;
     }
-    return MaterialApp(
-      navigatorKey: navigatorKey ?? Tools.navigatorKey,
-      scaffoldMessengerKey: scaffoldMessengerKey,
-      home: home,
-      routes: routes ?? {},
-      initialRoute: initialRoute,
-      onGenerateRoute: onGenerateRoute,
-      onGenerateInitialRoutes: onGenerateInitialRoutes,
-      onUnknownRoute: onUnknownRoute,
-      navigatorObservers: navigatorObservers ?? [],
-      builder: builder ??
-          (context, child) {
-            if (debugShowCheckedModeBanner) {
-              return ZapCheckedModeBanner(
-                message: checkedBannerMessage,
-                child: child,
-              );
-            } else {
-              return child!;
-            }
-          },
-      title: title,
-      onGenerateTitle: onGenerateTitle,
-      color: color,
-      theme: theme,
-      darkTheme: darkTheme,
-      themeMode: themeMode,
-      locale: locale,
-      localizationsDelegates: localizationsDelegates,
-      localeListResolutionCallback: localeListResolutionCallback,
-      localeResolutionCallback: localeResolutionCallback,
-      supportedLocales: supportedLocales,
-      showPerformanceOverlay: showPerformanceOverlay,
-      checkerboardRasterCacheImages: checkerboardRasterCacheImages,
-      checkerboardOffscreenLayers: checkerboardOffscreenLayers,
-      showSemanticsDebugger: showSemanticsDebugger,
-      debugShowCheckedModeBanner: false,
-      shortcuts: shortcuts,
-      scrollBehavior: scrollBehavior,
-      highContrastTheme: highContrastTheme,
-      highContrastDarkTheme: highContrastDarkTheme,
-      actions: actions,
-      debugShowMaterialGrid: debugShowMaterialGrid,
+    return ShToast(
+      child: MaterialApp(
+        navigatorKey: navigatorKey ?? Tools.navigatorKey,
+        scaffoldMessengerKey: scaffoldMessengerKey,
+        home: home,
+        routes: routes ?? {},
+        initialRoute: initialRoute,
+        onGenerateRoute: onGenerateRoute,
+        onGenerateInitialRoutes: onGenerateInitialRoutes,
+        onUnknownRoute: onUnknownRoute,
+        navigatorObservers: navigatorObservers ?? [],
+        builder: builder ??
+            (context, child) {
+              if (debugShowCheckedModeBanner) {
+                return ZapCheckedModeBanner(
+                  message: checkedBannerMessage,
+                  child: child,
+                );
+              } else {
+                return child!;
+              }
+            },
+        title: title,
+        onGenerateTitle: onGenerateTitle,
+        color: color,
+        theme: theme,
+        darkTheme: darkTheme,
+        themeMode: themeMode,
+        locale: locale,
+        localizationsDelegates: localizationsDelegates,
+        localeListResolutionCallback: localeListResolutionCallback,
+        localeResolutionCallback: localeResolutionCallback,
+        supportedLocales: supportedLocales,
+        showPerformanceOverlay: showPerformanceOverlay,
+        checkerboardRasterCacheImages: checkerboardRasterCacheImages,
+        checkerboardOffscreenLayers: checkerboardOffscreenLayers,
+        showSemanticsDebugger: showSemanticsDebugger,
+        debugShowCheckedModeBanner: false,
+        shortcuts: shortcuts,
+        scrollBehavior: scrollBehavior,
+        highContrastTheme: highContrastTheme,
+        highContrastDarkTheme: highContrastDarkTheme,
+        actions: actions,
+        debugShowMaterialGrid: debugShowMaterialGrid,
+      ),
     );
   }
 }

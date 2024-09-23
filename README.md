@@ -10,7 +10,8 @@ The Zapx package is a versatile collection of extensions and utilities for Flutt
 4. [Validaton](#Validaton)
 5. [Translation](#translation)
 6. [Navigation](#navigation)
-
+7. [ShowNotification](#ShowNotification)
+8. [Toast](#Toast)
 ---
 
 ## XMaterialApp
@@ -369,3 +370,67 @@ The `ZapNavigation` extension provides convenient navigation methods using the F
 ---
 
 Feel free to explore and leverage the features provided by the Zapx package to enhance your Flutter applications. For detailed information on each extension and class, refer to the respective sections above.
+
+
+## ShowNotification
+
+### OverView
+
+
+![Example Image](https://raw.githubusercontent.com/saifmalsheref/sh_toast/master/example_images/sheet_Notification.png)
+![Example Image](https://raw.githubusercontent.com/saifmalsheref/sh_toast/master/example_images/top_Notification.png)
+
+
+  parameters:
+- `title`: The title widget of the notification. (Required)
+- `content`: The content widget of the notification. (Optional)
+- `leading`: The leading widget of the notification. (Optional)
+- `showDismiss`: Flag to determine whether to display the dismiss button. (Default: true)
+- `toastOptions`: The options for customizing the appearance and behavior of the notification. (Default: NotificationOptions(borderRadius: 5, secondDuration: 4))
+- `dismissButton`: The custom dismiss button widget. (Default: DismissButton())
+- `onTap`: Callback function to be triggered when the notification is tapped. (Optional)
+
+```dart
+Zap.showNotificationSnack(
+title: Text('Notification Title'), // reqired
+content: Text('Notification Content'),
+showDismiss: true, // default is True
+dismissButton: DismissButton(
+  onDismiss: () {
+    print('dismiss');
+  },
+),
+onTap: () {
+  print('Tap notification');
+},
+                      );
+```
+
+## Toast
+
+  parameters:
+ - `message`: The message to be displayed in the toast. (Required)
+ - `toastPostion`: The position where the toast should be shown. (Required)
+ - `ToastColor`: The background color of the toast. (Default: Colors.black)
+ - `msgStyle`: The text style for the message. (Optional)
+ - `borderRadius`: The border radius of the toast. (Default: 10)
+ - `ToastPadding`: The padding for the toast. (Default: EdgeInsets.symmetric(horizontal: 5, vertical: 3))
+ - `ToastDuration`: The duration for which the toast should be visible. (Default: Duration(seconds: 2))
+- `onTap`: Callback function to be triggered when the toast is tapped. (Optional)
+
+```dart
+
+Zap.showToast(
+  "Hello, this is a toast!",
+  toastPosition: ToastPostion.top, // Specify the position of the toast
+);
+```
+
+### Available Positions
+
+- `ToastPostion.top`
+- `ToastPostion.bottom`
+- `ToastPostion.topLeft`
+- `ToastPostion.topRight`
+- `ToastPostion.bottomRight`
+- `ToastPostion.bottomLeft`

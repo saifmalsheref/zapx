@@ -48,20 +48,28 @@ extension ZapValidator on ZapInterface {
   }
 
   /// Validates if the given [value] is a valid URL with specified [validSchemes].
-  bool isValidUrl(
-    String value, {
-    List<String> validSchemes = const ['http', 'https'],
-  }) {
-    if (value.isEmpty) {
-      return false;
-    }
-
-    try {
-      Uri uri = Uri.parse(value);
-      return validSchemes.contains(uri.scheme);
-    } catch (_) {
-      // Consider logging the error or handling it differently.
-      return false;
-    }
+bool isValidUrl(
+  String value, {
+  List<String> validSchemes = const ['http', 'https'],
+}) {
+  if (value.isEmpty) {
+    return false;
   }
+
+  final regex = RegExp(
+    r'^(https?:\/\/)?' 
+    r'((([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})|' 
+    r'((\d{1,3}\.){3}\d{1,3}))'
+    r'(\:\d+)?(\/[-a-zA-Z0-9%_.~+]*)*' 
+    r'(\?[;&a-zA-Z0-9%_.~+=-]*)?' 
+    r'(\#[-a-zA-Z0-9_]*)?$'
+  );
+
+  try {
+    Uri uri = Uri.parse(value);
+    return validSchemes.contains(uri.scheme) && regex.hasMatch(value);
+  } catch (_) {
+    return false;
+  }
+}
 }

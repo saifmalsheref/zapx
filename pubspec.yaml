@@ -1,7 +1,7 @@
 name: zapx
 description: >
  Powerful Flutter extensions for navigation, validation, localization.
-version: 1.0.5
+version: 1.0.9
 homepage: https://github.com/saifmalsheref/zapx
 repository: https://github.com/saifmalsheref/zapx
 
@@ -12,6 +12,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  sh_toast: 2.0.3
 
 
 

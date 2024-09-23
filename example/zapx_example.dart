@@ -12,7 +12,6 @@ class MyApp extends StatelessWidget {
     return XMaterialApp(
       // XMaterialApp is assumed to be part of MaterialApp based on the provided information
       translationsKeys: TranslationController.Translation,
-
       // Displays a [Banner] saying "Zap Debug" when running in debug mode.
       // you can set message or remove by set 
       //  debugShowCheckedModeBanner: false,
@@ -25,6 +24,9 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+
 
 class TranslationController {
   static Map<String, Map<String, String>> Translation = {
@@ -62,6 +64,23 @@ class MyHomePage extends StatelessWidget {
             Text("height of the device screen ${Zap.height}"),
             Text("width of the device screen ${Zap.width}"),
             Text("height of the device's status bar ${Zap.statusBarHeight}"),
+
+
+             Center(
+            child: ElevatedButton(
+                onPressed: () => Zap.showNotificationSnack(title: Text(('showNotificationSnack'))),
+                child: Text("Show SnackBar")),
+          ),
+          Center(
+            child: ElevatedButton(
+                onPressed: () => Zap.showToast('showToast',),
+                child: Text("Show SnackBar")),
+          ),
+          Center(
+            child: ElevatedButton(
+                onPressed: () => Zap.showSnackBar('showSnackBar', context: context),
+                child: Text("Show SnackBar")),
+          )
           ],
         ),
       ),
