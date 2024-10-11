@@ -51,6 +51,7 @@ class XMaterialApp extends StatelessWidget {
   final RouterDelegate<Object>? routerDelegate;
   final BackButtonDispatcher? backButtonDispatcher;
   final bool useInheritedMediaQuery;
+  final bool Function(NavigationNotification)? onNavigationNotification;
   static XMaterialApp of(BuildContext? context) {
     context ??= Zap.context;
     final ancestor = context.findAncestorWidgetOfExactType<XMaterialApp>();
@@ -77,6 +78,7 @@ class XMaterialApp extends StatelessWidget {
     this.textDirection,
     this.title = '',
     this.onGenerateTitle,
+    this.onNavigationNotification,
     this.color,
     this.theme,
     this.darkTheme,
@@ -126,6 +128,7 @@ class XMaterialApp extends StatelessWidget {
     this.onGenerateTitle,
     this.color,
     this.theme,
+    this.onNavigationNotification,
     this.darkTheme,
     this.useInheritedMediaQuery = false,
     this.highContrastTheme,
@@ -171,51 +174,40 @@ class XMaterialApp extends StatelessWidget {
     if (navigatorKey != null) {
       Tools.navigatorKey = navigatorKey!;
     }
-    return ShToast(
-      child: MaterialApp(
-        navigatorKey: navigatorKey ?? Tools.navigatorKey,
-        scaffoldMessengerKey: scaffoldMessengerKey,
-        home: home,
-        routes: routes ?? {},
-        initialRoute: initialRoute,
-        onGenerateRoute: onGenerateRoute,
-        onGenerateInitialRoutes: onGenerateInitialRoutes,
-        onUnknownRoute: onUnknownRoute,
-        navigatorObservers: navigatorObservers ?? [],
-        builder: builder ??
-            (context, child) {
-              if (debugShowCheckedModeBanner) {
-                return ZapCheckedModeBanner(
-                  message: checkedBannerMessage,
-                  child: child,
-                );
-              } else {
-                return child!;
-              }
-            },
-        title: title,
-        onGenerateTitle: onGenerateTitle,
-        color: color,
-        theme: theme,
-        darkTheme: darkTheme,
-        themeMode: themeMode,
-        locale: locale,
-        localizationsDelegates: localizationsDelegates,
-        localeListResolutionCallback: localeListResolutionCallback,
-        localeResolutionCallback: localeResolutionCallback,
-        supportedLocales: supportedLocales,
-        showPerformanceOverlay: showPerformanceOverlay,
-        checkerboardRasterCacheImages: checkerboardRasterCacheImages,
-        checkerboardOffscreenLayers: checkerboardOffscreenLayers,
-        showSemanticsDebugger: showSemanticsDebugger,
-        debugShowCheckedModeBanner: false,
-        shortcuts: shortcuts,
-        scrollBehavior: scrollBehavior,
-        highContrastTheme: highContrastTheme,
-        highContrastDarkTheme: highContrastDarkTheme,
-        actions: actions,
-        debugShowMaterialGrid: debugShowMaterialGrid,
-      ),
+    return MaterialApp(
+      navigatorKey: navigatorKey ?? Tools.navigatorKey,
+      scaffoldMessengerKey: scaffoldMessengerKey,
+      home: home,
+      routes: routes ?? {},
+      initialRoute: initialRoute,
+      onGenerateRoute: onGenerateRoute,
+      onGenerateInitialRoutes: onGenerateInitialRoutes,
+      onUnknownRoute: onUnknownRoute,
+      navigatorObservers: navigatorObservers ?? [],
+      onNavigationNotification: onNavigationNotification,
+      builder: builder,
+      title: title,
+      onGenerateTitle: onGenerateTitle,
+      color: color,
+      theme: theme,
+      darkTheme: darkTheme,
+      themeMode: themeMode,
+      locale: locale,
+      localizationsDelegates: localizationsDelegates,
+      localeListResolutionCallback: localeListResolutionCallback,
+      localeResolutionCallback: localeResolutionCallback,
+      supportedLocales: supportedLocales,
+      showPerformanceOverlay: showPerformanceOverlay,
+      checkerboardRasterCacheImages: checkerboardRasterCacheImages,
+      checkerboardOffscreenLayers: checkerboardOffscreenLayers,
+      showSemanticsDebugger: showSemanticsDebugger,
+      debugShowCheckedModeBanner: debugShowCheckedModeBanner,
+      shortcuts: shortcuts,
+      scrollBehavior: scrollBehavior,
+      highContrastTheme: highContrastTheme,
+      highContrastDarkTheme: highContrastDarkTheme,
+      actions: actions,
+      debugShowMaterialGrid: debugShowMaterialGrid,
     );
   }
 }

@@ -66,21 +66,7 @@ class MyHomePage extends StatelessWidget {
             Text("height of the device's status bar ${Zap.statusBarHeight}"),
 
 
-             Center(
-            child: ElevatedButton(
-                onPressed: () => Zap.showNotificationSnack(title: Text(('showNotificationSnack'))),
-                child: Text("Show SnackBar")),
-          ),
-          Center(
-            child: ElevatedButton(
-                onPressed: () => Zap.showToast('showToast',),
-                child: Text("Show SnackBar")),
-          ),
-          Center(
-            child: ElevatedButton(
-                onPressed: () => Zap.showSnackBar('showSnackBar', context: context),
-                child: Text("Show SnackBar")),
-          )
+        
           ],
         ),
       ),
