@@ -22,7 +22,7 @@ enum Transition {
 }
 
 // Consider renaming this function to make its purpose clearer.
-PageRouteBuilder _buildPageRoute(
+PageRoute _buildPageRoute(
     dynamic page, RouteSettings? settings, Transition transition,
     {bool allowSnapshotting = true,
     Color? barrierColor,
@@ -33,12 +33,8 @@ PageRouteBuilder _buildPageRoute(
     bool opaque = true,
     Duration reverseTransitionDuration = const Duration(milliseconds: 300),
     Duration transitionDuration = const Duration(milliseconds: 300)}) {
-  // Consider adding comments to explain the purpose and parameters of this function.
-  return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => page,
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      // Consider extracting this switch statement into a separate function for better readability.
-      switch (transition) {
+      Widget transitionsBuilder (BuildContext context,Animation<double> animation,Animation<double> secondaryAnimation,Widget child){
+   switch (transition) {
         case Transition.fade:
           return _buildFadeTransition(animation, child);
         case Transition.fadeIn:
@@ -62,7 +58,12 @@ PageRouteBuilder _buildPageRoute(
         default:
           return child;
       }
-    },
+       } 
+    
+  // Consider adding comments to explain the purpose and parameters of this function.
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) =>page is WidgetBuilder? page(context) : page,
+    transitionsBuilder:transitionsBuilder,
     allowSnapshotting: allowSnapshotting,
     barrierColor: barrierColor,
     barrierDismissible: barrierDismissible,

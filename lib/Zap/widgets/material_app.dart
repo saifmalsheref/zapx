@@ -52,6 +52,12 @@ class XMaterialApp extends StatelessWidget {
   final BackButtonDispatcher? backButtonDispatcher;
   final bool useInheritedMediaQuery;
   final bool Function(NavigationNotification)? onNavigationNotification;
+  final bool isRouter;
+  final RouterConfig<Object>? routerConfig;
+  final String? restorationScopeId;
+  final Curve themeAnimationCurve;
+  final Duration themeAnimationDuration;
+  final AnimationStyle? themeAnimationStyle;
   static XMaterialApp of(BuildContext? context) {
     context ??= Zap.context;
     final ancestor = context.findAncestorWidgetOfExactType<XMaterialApp>();
@@ -63,7 +69,11 @@ class XMaterialApp extends StatelessWidget {
     Key? key,
     this.navigatorKey,
     this.scaffoldMessengerKey,
+    this.themeAnimationStyle,
+    this.themeAnimationDuration = kThemeAnimationDuration,
     this.checkedBannerMessage,
+    this.restorationScopeId,
+    this.themeAnimationCurve = Curves.linear,
     this.home,
     Map<String, Widget Function(BuildContext)> this.routes =
         const <String, WidgetBuilder>{},
@@ -110,9 +120,11 @@ class XMaterialApp extends StatelessWidget {
     this.actions,
     this.enableLog,
   })  : routeInformationProvider = null,
+        isRouter = false,
         routeInformationParser = null,
         routerDelegate = null,
         backButtonDispatcher = null,
+        routerConfig = null,
         super(key: key);
 
   const XMaterialApp.router({
@@ -158,10 +170,16 @@ class XMaterialApp extends StatelessWidget {
     this.popGesture,
     this.transitionDuration,
     this.defaultGlobalState,
-    this.navigatorObservers,
     this.enableLog,
+    this.routerConfig,
+    this.restorationScopeId,
+    this.themeAnimationStyle,
+    this.themeAnimationCurve = Curves.linear,
+    this.themeAnimationDuration = kThemeAnimationDuration,
   })  : navigatorKey = null,
         onGenerateRoute = null,
+        isRouter = true,
+        navigatorObservers = null,
         home = null,
         onGenerateInitialRoutes = null,
         onUnknownRoute = null,
@@ -174,8 +192,50 @@ class XMaterialApp extends StatelessWidget {
     if (navigatorKey != null) {
       Tools.navigatorKey = navigatorKey!;
     }
+    if (isRouter) {
+      return MaterialApp.router(
+        routeInformationParser: routeInformationParser,
+        routeInformationProvider: routeInformationProvider,
+        routerDelegate: routerDelegate,
+        scaffoldMessengerKey: scaffoldMessengerKey,
+        routerConfig: routerConfig,
+        themeAnimationDuration: themeAnimationDuration,
+        themeAnimationStyle: themeAnimationStyle,
+        backButtonDispatcher: backButtonDispatcher,
+        themeAnimationCurve: themeAnimationCurve,
+        restorationScopeId: restorationScopeId,
+        onNavigationNotification: onNavigationNotification,
+        builder: builder,
+        title: title,
+        onGenerateTitle: onGenerateTitle,
+        color: color,
+        theme: theme,
+        darkTheme: darkTheme,
+        themeMode: themeMode,
+        locale: locale,
+        localizationsDelegates: localizationsDelegates,
+        localeListResolutionCallback: localeListResolutionCallback,
+        localeResolutionCallback: localeResolutionCallback,
+        supportedLocales: supportedLocales,
+        showPerformanceOverlay: showPerformanceOverlay,
+        checkerboardRasterCacheImages: checkerboardRasterCacheImages,
+        checkerboardOffscreenLayers: checkerboardOffscreenLayers,
+        showSemanticsDebugger: showSemanticsDebugger,
+        debugShowCheckedModeBanner: debugShowCheckedModeBanner,
+        shortcuts: shortcuts,
+        scrollBehavior: scrollBehavior,
+        highContrastTheme: highContrastTheme,
+        highContrastDarkTheme: highContrastDarkTheme,
+        actions: actions,
+        debugShowMaterialGrid: debugShowMaterialGrid,
+      );
+    }
     return MaterialApp(
+      themeAnimationDuration: themeAnimationDuration,
+      themeAnimationStyle: themeAnimationStyle,
+      themeAnimationCurve: themeAnimationCurve,
       navigatorKey: navigatorKey ?? Tools.navigatorKey,
+      restorationScopeId: restorationScopeId,
       scaffoldMessengerKey: scaffoldMessengerKey,
       home: home,
       routes: routes ?? {},

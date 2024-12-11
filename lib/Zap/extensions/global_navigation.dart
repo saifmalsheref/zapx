@@ -4,8 +4,12 @@ part of 'package:zapx/zapx.dart';
 ///
 /// The [ZapNavigation] extension includes methods for navigating to pages, pushing and replacing routes,
 /// popping routes, and managing route transitions.
+
+
 extension ZapNavigation on ZapInterface {
+  
   /// Navigate to a new page with various configurable options.
+  /// 
   ///
   /// Parameters:
   /// - `page`: The page to navigate to.
@@ -62,7 +66,7 @@ extension ZapNavigation on ZapInterface {
       );
 
   /// Pop the current route from the Navigator stack.
-  void back({BuildContext? context}) => Navigator.pop(context ?? Zap.context);
+  void back<T>({BuildContext? context,T?result}) => Navigator.pop<T>(context ?? Zap.context,result);
 
   /// Replace the current page with a new one.
   ///
@@ -165,4 +169,80 @@ extension ZapNavigation on ZapInterface {
       ),
     );
   }
+
+
+
+/// Creates a route with optional animations and custom configurations.
+///
+/// This function builds a [PageRoute] for the given [page] with specified
+/// transition effects and route settings. It allows customization of transition
+/// animations, barrier behavior, and other route properties.
+///
+/// ### Parameters:
+/// - [page]: The widget to display as the content of the route. This is required.
+/// - [transition]: The transition type to apply when navigating to the route. 
+///   Defaults to [Transition.native].
+/// - [settings]: Optional [RouteSettings] for the route (e.g., route name and arguments).
+/// - [allowSnapshotting]: Determines whether snapshotting is allowed for this route.
+///   Defaults to `true`.
+/// - [barrierColor]: The color of the modal barrier when this route is presented
+///   (used for modal routes). Defaults to fully transparent.
+/// - [barrierDismissible]: Specifies whether the barrier can be dismissed by tapping.
+///   Defaults to `true`.
+/// - [barrierLabel]: Optional semantic label for the barrier (for accessibility purposes).
+/// - [fullscreenDialog]: If `true`, the route will appear as a full-screen modal dialog.
+///   Defaults to `false`.
+/// - [maintainState]: Indicates whether the route should maintain its state when it's
+///   inactive but still in the route stack. Defaults to `true`.
+/// - [opaque]: Determines whether the route is opaque. Defaults to `true`.
+/// - [reverseTransitionDuration]: The duration of the reverse transition when navigating back.
+///   Defaults to `300 milliseconds`.
+/// - [transitionDuration]: The duration of the forward transition when navigating to the route.
+///   Defaults to `300 milliseconds`.
+///
+/// ### Returns:
+/// A [PageRoute] that wraps the given [page] with the specified transition and configuration.
+///
+/// ### Example:
+/// ```dart
+/// final route = animatedPageRoute(
+///   page: MyPage(),
+///   transition: Transition.fade,
+///   settings: RouteSettings(name: '/myPage'),
+///   barrierColor: Colors.black.withOpacity(0.5),
+/// );
+/// Navigator.of(context).push(route);
+/// ```
+///
+/// This function provides flexibility for creating routes with custom transitions
+/// and behavior tailored to your application's needs.
+Route<dynamic> animatedPageRoute({
+  required WidgetBuilder builder,
+  Transition transition = Transition.native, // Assuming Transition.native is valid
+   RouteSettings? settings,
+  bool allowSnapshotting = true,
+  Color? barrierColor = const Color(0x00000000), // Transparent by default
+  bool barrierDismissible = true,
+  String? barrierLabel,
+  bool fullscreenDialog = false,
+  bool maintainState = true,
+  bool opaque = true,
+  Duration reverseTransitionDuration = const Duration(milliseconds: 300),
+  Duration transitionDuration = const Duration(milliseconds: 300),
+}) {
+  return _buildPageRoute(
+    builder,
+    settings,
+    transition,
+    allowSnapshotting: allowSnapshotting,
+    barrierColor: barrierColor,
+    barrierDismissible: barrierDismissible,
+    barrierLabel: barrierLabel,
+    fullscreenDialog: fullscreenDialog,
+    maintainState: maintainState,
+    opaque: opaque,
+    reverseTransitionDuration: reverseTransitionDuration,
+    transitionDuration: transitionDuration,
+  );
+}
 }
